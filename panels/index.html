@@ -1,0 +1,25 @@
+<div> Hello!</div>
+<div id="response">No Response</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+        integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<button onclick="sayHello()">Say Hello</button>
+<script>
+        function sayHello() {
+                axios.get('/hello', {
+                        params: {
+                                count: 5,
+                        }
+                })
+                        .then(function (response) {
+                                $("#response").html(response.data)
+                        })
+
+
+        }
+
+
+</script>

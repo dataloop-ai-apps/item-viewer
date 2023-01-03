@@ -1,0 +1,63 @@
+name: Bug Report
+# title: " "
+description: Something went wrong in this app?
+labels: [ bug, triage ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug!
+
+  - type: dropdown
+    attributes:
+      label: bug-source
+      description: |
+        Do you know the source of the bug?
+      multiple: true
+      options:
+        - "Dataloop platform"
+        - "App source code"
+        - "Usage"
+        - "Custom data"
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: env
+      description: Please specify any environment information (OS, python packages, versions etc) .
+      placeholder: |
+        - OS: Windows, Ubuntu, Mac
+        - Python: 3.6, 3.7, 3.8 3.9
+        - SDK Versions: DTLPY, DTLJS
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: bug
+      description: Please provide any screenshots or SDK errors.
+      placeholder: |
+        For faster and helpful response, please provide as much details as you can.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: reproduce
+      description: Please provide minimal script or platform steps to reproduce the bug.
+      placeholder: |
+        Steps:
+        1. 
+        2. 
+        
+        ```
+        # Code to reproduce your issue here
+        ```
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: additional-information
+      description: Any additional information that might be helpful?
