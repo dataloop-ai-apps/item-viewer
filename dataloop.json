@@ -41,5 +41,10 @@
                 "item-viewer"
             ]
         }
-    ]
+    ],
+    "codebase": {
+        "type": "git",
+        "gitUrl": "https://github.com/dataloop-ai-apps/item-viewer.git",
+        "gitTag": "v1.0.0"
+    }
 }
