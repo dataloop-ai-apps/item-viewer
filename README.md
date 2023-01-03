@@ -1,50 +1,41 @@
-# This is an Application Template Format 
+<p align="left">
+  <img align="center" height="40mm" src="https://mk0dataloop4fni44fjg.kinstacdn.com/wp-content/uploads/2020/03/logo.svg">
+</p>
+
+# Simple Item Viewer
+
+![Item Viewer Example](/docs/assets/viewer-demo.png)
 
 ## Description
-What is this app for? What does it suppose to do?
 
+This application contains a simple item viewer that displays image files and its classifications.
 
-## Installations
-To deploy the app in the organization:
-```
-dlp app deploy .
-```
+The application allows also the creation and deletion of classifications on the specific image item.
 
-To install for a project:
-```
-dlp app install -p <id>
-```
+## Setup
 
-## Tutorial and How-To
-* Add component to a pipeline
-* Connect a trigger to an items' dataset
+- Clone the repository
+- Navigate to the repository
 
-## Components and Integrations 
-### FaaS
-* first function, name, IO, 
-*
+### Deployment
 
-### Panels  
-* Hello Panel
+- Deploying into an organization
+  - `dlp app deploy .`
+- Deploying into a project
+  - `dlp app publish --project-name <PROJECT_NAME>`
 
-### Trigger events
-* On item creation
+### Instillation
 
-## Environment, Docker and system requirements
-* docker image
-* VUE version
-* Ubuntu
-<div align="left">
-    <a href="https://github.com/dataloop-ai/application-template/wiki/pipelines.ipynb">
-        <img src="https://cloud.google.com/_static/cloud/images/social-icon-google-cloud-1200-630.png" width="15%"/>
-    </a>
-</div>
+- Installing in a project
+  - `dlp app install --dpk-id <DPK ID> --project-name <PROJECT_NAME>`
 
-## Contributors 
+## Components and Integrations
 
+### Panels
 
-## Contributions, Bugs and Issues - How to Contribute  
+- Simple item viewer panel
+
+## Contributions, Bugs and Issues - How to Contribute
+
 We welcome anyone to help us improve this app.  
 [Here's](CONTRIBUTING.md) a detailed instructions to help you open a bug or ask for a feature request
-
-

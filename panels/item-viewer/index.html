@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataloop item viewer</title>
+</head>
+
+<body>
+    <button onclick="handleClick()">refresh</button>
+    <button onclick="handleFetch()">Fetch Item</button>
+    <button onclick="handleAnnotations()">Fetch Annotations</button>
+    <br />
+    <input id="classification" type="text"/>
+    <button onclick="handleCreate()">Create Classification</button>
+        <div id="viewer-main">
+            <div id="tools-container"></div>
+            <div id="item-container"></div>
+            <div id="annotations-container"></div>
+        </div>
+    </button>
+
+    <script src="https://console.dataloop.ai/dlAppLib.js"></script>
+    <script>
+        const annotationsDiv = document.getElementById('annotations-container')
+        let item = null
+
+        const handleClick = async () => {
+            window.location.reload()
+        }
+
+        const maskIndex = (n) => {
+            if (n >= 100) {
+                return `${n}`
+            } else {
+                return n >= 10 ? `0${n}` : `00${n}`
+            }
+        }
+
+        const handleFetch = async () => {
+            const itemDiv = document.getElementById("item-container")
+            itemDiv.innerHTML = ""
+            item = await dl.items.get()
+            const stream = await dl.items.stream(item.stream)
+            const img = new Image(
+                item.metadata?.system.width,
+                item.metadata?.system.height
+            )
+
+            console.log("@@@@@", JSON.stringify(stream))
+            img.src = stream
+            itemDiv.appendChild(img)
+        }
+
+        const handleAnnotations = async () => {
+            annotationsDiv.innerHTML = ""
+            const annotations = await dl.annotations.query()
+            const existingClasses = []
+            for (const annotation of annotations.items) {
+                existingClasses.push(annotation.label)
+                const btn = document.createElement("button")
+                btn.id = `annotation-${annotation.clientId}`
+                const objectId = annotation.metadata.system.objectId
+                btn.style.backgroundColor = annotation.labelColor
+                btn.style.border = "0px"
+                btn.style.marginRight = "4px"
+                btn.innerText = `${annotation.label}#${maskIndex(objectId)} (${annotation.type
+                    })`
+                annotationsDiv.appendChild(btn)
+            }
+            console.log(existingClasses)
+        }
+
+        const handleCreate = async () => {
+            const label = document.getElementById("classification").value
+            const classification = {
+                type: "class",
+                itemId: item.id,
+                attributes: [],
+                label: label,
+            }
+            await dl.annotations.create(classification)
+        }
+
+        const init = async () => {
+            await dl.init()
+            await dl.on('ready', async () => {
+                console.log('ready')
+                await handleFetch()
+                await handleAnnotations()
+            })
+            dl.on('data', async (msg) => {
+                if (msg.type === 'app') {
+                    if (msg.data.scope === 'annotation') {
+                        const annotation = msg.data.data
+                        if (msg.data.crud === 'created') {
+                            await handleAnnotations()
+                        } else if (msg.data.crud === 'deleted') {
+                            if (!Array.isArray(annotation)) {
+                                const annotationBtn = document.getElementById(`annotation-${annotation.clientId}`)?.remove()
+                                return
+                            }
+                            for (const a of annotation) {
+                                const annotationBtn = document.getElementById(`annotation-${a.clientId}`)?.remove()
+                            }
+                        }
+                    }
+                }
+                console.log('@@@@ Message from host agent:', msg)
+            })
+        }
+
+        init()
+    </script>
+    <style lang="css">
+        .not-existing {
+            background-color: white
+        }
+
+        .existing {
+            background-color: lightgreen
+        }
+    </style>
+</body>
+
+</html>
