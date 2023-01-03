@@ -34,5 +34,12 @@
                 }
             }
         ]
-    }
+    },
+    "services": [
+        {
+            "panelNames": [
+                "item-viewer"
+            ]
+        }
+    ]
 }
