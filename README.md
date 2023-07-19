@@ -19,9 +19,7 @@ The application allows also the creation and deletion of classifications on the 
 
 ### Deployment
 
-- Deploying into an organization
-  - `dlp app deploy .`
-- Deploying into a project
+- Publish the app
   - `dlp app publish --project-name <PROJECT_NAME>`
 
 ### Instillation

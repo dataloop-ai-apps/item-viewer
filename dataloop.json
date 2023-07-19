@@ -33,18 +33,33 @@
                     ]
                 }
             }
-        ]
-    },
-    "services": [
+        ],
+        "services": [
         {
+            "name": "active-learning-nodes",
             "panelNames": [
                 "item-viewer"
-            ]
+            ],
+            "runtime": {
+                "podType": "regular-xs",
+                "runnerImage": "gcr.io/viewo-g/piper/agent/runner/cpu/node14:latest",
+                "numReplicas": 1,
+                "concurrency": 10,
+                "pyPackages": {},
+                "autoscaler": {
+                    "type": "rabbitmq",
+                    "minReplicas": 1,
+                    "maxReplicas": 1,
+                    "queueLength": 10
+                },
+                "preemptible": false,
+                "executionTimeout": 172800,
+                "drainTime": 600,
+                "onReset": "failed",
+                "runExecutionAsProcess": false
+            },
+            "maxAttempts": 3
         }
-    ],
-    "codebase": {
-        "type": "git",
-        "gitUrl": "https://github.com/dataloop-ai-apps/item-viewer.git",
-        "gitTag": "v1.0.1"
+    ]
     }
 }
