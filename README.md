@@ -31,6 +31,65 @@ git clone https://github.com/dataloop-ai-apps/item-viewer
 cd item-viewer
 ```
 
+
+### Local Development
+
+You can set up a local development mode using docker, and work on the app directly on the platform.
+
+#### Serve locally
+
+We'll use a docker image to serve the app. Using ngnix we'll serve the static files on the app route.
+
+1. For working on a dev/local environment, you will need to add local.dataloop.ai to your hosts file.
+   Open your hosts file with admin/sudo privileges.
+   This is normally in `/etc/hosts` on Linux, `C:\Windows\System32\drivers\etc\hosts` on Windows.
+   Add the following lines to the end of the file:
+
+```text
+# dataloop local
+127.0.0.1 local.dataloop.ai
+```
+
+2. Next, we'll build the docker and start it
+
+```shell
+docker build -t local-app:0.0.1 -f ./Dockerfile . 
+```
+
+Running the docker on Windows:
+```shell
+docker run -p 3000:3000  -it -v %cd%:/tmp/app local-app:0.0.1 bash
+```
+Running the docker on Linux:
+
+```shell
+docker run -p 3000:3000  -it -v $(pwd):/tmp/app local-app:0.0.1 bash
+```
+
+Inside the docker, we'll start the servers
+```shell
+./start_dev.sh
+```
+
+Now the app is running locally. you can navigate to the local url
+
+```shell
+https://local.dataloop.ai:3000/item-viewer/
+```
+
+#### Add the local app to the platform
+
+1. Navigate to the platform, to the CloudOps page
+   ![cloudops](docs/local_dev/dev_tab.png)
+2. Add a new dev application
+   ![cloudops](docs/local_dev/add_app.png)
+3. Go to any item in the project, and open the `Open With` menu:
+   ![cloudops](docs/local_dev/open_with.png)
+4. Click on the app to open the viewer
+   ![cloudops](docs/local_dev/item_view.png)
+
+All Set! Now you can work locally and develop the app easily.
+
 ### Deployment
 
 Create a project and publish the app
@@ -57,55 +116,6 @@ app = project.apps.get(app_name=dpk.display_name)
 app.dpk_version = dpk.version
 app.update()
 ```
-
-### Local Development
-
-You can set up a local development mode using docker, and work on the app directly on the platform.
-
-#### Serve locally
-
-We'll use a docker image to serve the app. Using ngnix we'll serve the static files on the app route.
-
-1. For working on a dev/local environment, you will need to add local.dataloop.ai to your hosts file.
-   Open your hosts file with admin/sudo privileges.
-   This is normally in `/etc/hosts` on Linux, `C:\Windows\System32\drivers\etc\hosts` on Windows.
-   Add the following lines to the end of the file:
-
-```text
-# dataloop local
-127.0.0.1 local.dataloop.ai
-```
-
-2. Next, we'll build the docker and start it
-
-```shell
-docker build -t local-app:0.0.1 -f ./Dockerfile . 
-docker run -p 3000:3000  -it -v E:\Applications\item-viewer:/tmp/app local-app:0.0.1 bash
-```
-
-Inside the docker, we'll start the servers
-```shell
-./start_dev.sh
-```
-
-Now the app is running locally. you can navigate to the local url
-
-```shell
-https://local.dataloop.ai:3000/item-viewer/
-```
-
-#### Add the local app to the platform
-
-1. Navigate to the platform, to the CloudOps page
-   ![cloudops](docs/local_dev/dev_tab.png)
-2. Add a new dev application
-   ![cloudops](docs/local_dev/add_app.png)
-3. Go to any item in the project, and open the `Open With` menu:
-   ![cloudops](docs/local_dev/open_with.png)
-4. Click on the app to open the viewer
-   ![cloudops](docs/local_dev/item_view.png)
-
-All Set! Now you can work locally and develop the app easily.
 
 ## Next
 

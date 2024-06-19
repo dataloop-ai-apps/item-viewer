@@ -36,7 +36,7 @@
         ],
         "services": [
         {
-            "name": "active-learning-nodes",
+            "name": "item-viewer-service",
             "panelNames": [
                 "item-viewer"
             ],
