@@ -41,7 +41,7 @@
 
         const handleFetch = async () => {
             const itemDiv = document.getElementById("item-container")
-            itemDiv.innerHTML = ""
+            itemDiv.textContent = ""
             item = await dl.items.get()
             const stream = await dl.items.stream(item.stream)
             const img = new Image(
@@ -55,7 +55,7 @@
         }
 
         const handleAnnotations = async () => {
-            annotationsDiv.innerHTML = ""
+            annotationsDiv.textContent = ""
             const annotations = await dl.annotations.query()
             const existingClasses = []
             for (const annotation of annotations.items) {
